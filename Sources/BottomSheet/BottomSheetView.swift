@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPositionEnum: RawRepresentable>: View where bottomSheetPositionEnum.RawValue == CGFloat, bottomSheetPositionEnum: CaseIterable {
+public struct BottomSheetView<hContent: View, mContent: View, bottomSheetPositionEnum: RawRepresentable>: View where bottomSheetPositionEnum.RawValue == CGFloat, bottomSheetPositionEnum: CaseIterable {
     
     @State private var translation: CGFloat = 0
     @State private var isScrollEnabled: Bool = true
@@ -42,7 +42,7 @@ internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPosit
     }
     
     
-    internal var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             if (self.options.backgroundBlur || self.options.tapToDismiss) && !self.isHiddenPosition {
                 EffectView(effect: self.options.backgroundBlurEffect)
@@ -348,7 +348,7 @@ internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPosit
     }
     
     
-    internal init(bottomSheetPosition: Binding<bottomSheetPositionEnum>, options: [BottomSheet.Options], @ViewBuilder headerContent: () -> hContent?, @ViewBuilder mainContent: () -> mContent) {
+    public init(bottomSheetPosition: Binding<bottomSheetPositionEnum>, options: [BottomSheet.Options], @ViewBuilder headerContent: () -> hContent?, @ViewBuilder mainContent: () -> mContent) {
         self._bottomSheetPosition = bottomSheetPosition
         self.options = options
         self.headerContent = headerContent()
@@ -356,7 +356,7 @@ internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPosit
     }
 }
 
-internal extension BottomSheetView where hContent == ModifiedContent<ModifiedContent<Text, _EnvironmentKeyWritingModifier<Optional<Int>>>, _PaddingLayout> {
+public extension BottomSheetView where hContent == ModifiedContent<ModifiedContent<Text, _EnvironmentKeyWritingModifier<Optional<Int>>>, _PaddingLayout> {
     init(bottomSheetPosition: Binding<bottomSheetPositionEnum>, options: [BottomSheet.Options], title: String?, @ViewBuilder content: () -> mContent) {
         if title == nil {
             self.init(bottomSheetPosition: bottomSheetPosition, options: options, headerContent: { return nil }, mainContent: content)
